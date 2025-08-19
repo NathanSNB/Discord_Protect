@@ -11,6 +11,7 @@ module.exports = {
         await handleAntiTimeoutProtection(oldMember, newMember, bot, guildData);
         await handleAntiRoleProtection(oldMember, newMember, bot, guildData);
         await handleAntiRenameProtection(oldMember, newMember, bot, guildData);
+        await handleRoleAlerts(oldMember, newMember, bot, guildData);
     }
 };
 
@@ -172,6 +173,39 @@ async function handleAntiRoleProtection(oldMember, newMember, bot, guildData) {
                 
                 await bot.notifyUser(null, embed);
             }
+        }
+    }
+}
+
+// Alert for protected role assignments
+async function handleRoleAlerts(oldMember, newMember, bot, guildData) {
+    if (!guildData.notifications?.protectedRoleAlert) return;
+    
+    // Check for added roles
+    const addedRoles = newMember.roles.cache.filter(role => !oldMember.roles.cache.has(role.id));
+    const protectedRoles = guildData.protectedRoles || [];
+    
+    for (const [roleId, role] of addedRoles) {
+        if (protectedRoles.includes(roleId)) {
+            // Alert for protected role assignment
+            const embed = createProtectionEmbed(
+                '🚨 Alerte Rôle Protégé',
+                `Le rôle protégé **${role.name}** a été attribué à ${newMember.user.tag}`,
+                [
+                    { name: 'Utilisateur', value: newMember.user.tag, inline: true },
+                    { name: 'Rôle', value: role.name, inline: true },
+                    { name: 'Serveur', value: newMember.guild.name, inline: true }
+                ]
+            );
+            
+            await bot.notifyUser(null, embed);
+            
+            await bot.logAction(newMember.guild.id, 'alert', {
+                type: 'protectedRoleAssigned',
+                user: newMember.user.tag,
+                role: role.name,
+                roleId: role.id
+            });
         }
     }
 }
