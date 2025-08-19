@@ -1,0 +1,42 @@
+{
+  "token": "YOUR_BOT_TOKEN_HERE",
+  "clientId": "YOUR_BOT_CLIENT_ID",
+  "authorizedUserId": "YOUR_USER_ID_HERE",
+  "prefix": "=",
+  "deleteCommandMessages": true,
+  "dmNotifications": true,
+  "maxLogEntries": 1000,
+  "cooldownDuration": 2000,
+  "defaultSettings": {
+    "modules": {
+      "antiMute": true,
+      "antiTimeout": true,
+      "antiRole": true,
+      "antiKickBan": true,
+      "antiRename": true,
+      "antiPermissions": true,
+      "lockName": false,
+      "privateVoice": false,
+      "antiMove": false,
+      "chainSystem": false,
+      "wakeupSystem": true,
+      "antiPing": false
+    },
+    "protectedRoles": [],
+    "lockedChannels": [],
+    "antiMoveSettings": {
+      "maxAttempts": 3,
+      "punishmentDuration": 300000,
+      "punishmentType": "timeout"
+    },
+    "wakeupSettings": {
+      "movesCount": 10,
+      "moveDelay": 500
+    },
+    "notifications": {
+      "dmAlerts": true,
+      "adminRoleAlert": true,
+      "protectedRoleAlert": true
+    }
+  }
+}
