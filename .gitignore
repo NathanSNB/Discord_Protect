@@ -1,0 +1,25 @@
+# Configuration
+config.json
+.env
+
+# Logs et données
+logs/
+data/
+
+# Node modules
+node_modules/
+package-lock.json
+yarn.lock
+
+# Fichiers temporaires
+*.tmp
+*.temp
+.cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Système
+.DS_Store
+Thumbs.db
